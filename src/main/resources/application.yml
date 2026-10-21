@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: gym
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gym
+    username: postgres
+    password: "0000"
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
+  autoconfigure:
+    exclude:
+      # We handle users ourselves. This stops Spring from creating a default
+      # user with a random password that it prints in the log.
+      - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  health:
+    mail:
+      enabled: false
