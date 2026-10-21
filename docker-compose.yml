@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: gym-postgres
+    environment:
+      POSTGRES_DB: gym
+      POSTGRES_USER: gym
+      POSTGRES_PASSWORD: gym
+    ports:
+      - "5432:5432"
+    volumes:
+      - gym-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gym -d gym"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: gym-mailhog
+    ports:
+      - "1025:1025"   # SMTP port the app sends mail to
+      - "8025:8025"   # web page that shows the caught mail
+
+volumes:
+  gym-pgdata:
